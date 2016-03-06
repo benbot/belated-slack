@@ -1,1 +1,1 @@
-web puma -p $IP app.rb
+web: ruby -p $IP app.rb
