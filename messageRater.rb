@@ -12,12 +12,10 @@ class MessageRater
 
     time = time.reverse
 
-    tempTime = time[0][:time]
     time.size.times do |i|
       unless i+1 >= time.size
-        t = tempTime - time[i+1][:time]
+        t = time[i][:time] - time[i+1][:time]
         midTime.push({msg: time[i], time: t})
-        tempTime = time[i+1][:time]
       end
     end
 
@@ -48,62 +46,59 @@ class MessageRater
 
   def set_score messages
     messages.each do |m|
-      score = {a: 0, b: 0, c: 0, d: 0, e: 0, f: 0, h: 0}
+      score = {}
       text = m["text"]
 
       if !m["file"].nil?
-        score[:a] = 1
+        score[:file] = 1
       else
-        score[:a] = 0
+        score[:file] = 0
       end
 
       if /[A-Z]/ =~ text
-        score[:b] = 1
+        score[:capital] = 1
       else
-        score[:b] = 0
+        score[:capital] = 0
       end
 
-      ["boyfriend","girlfriend","cheat","kissed","did you hear"].each do |k|
+      ["boyfriend","girlfriend","cheat","kissed","did you hear",
+       "javascript", "good", "bad", "ruby", "go", "programming"].each do |k|
         if text.include? k
-          score[:c] = 1
+          score[:keywords] = 1
           break
         else
-          score[:c] = 0
+          score[:keywords] = 0
         end
       end
 
-      if /[0-9]/ =~ text
-        score[:d] = 1
+      if /\$|[0-9]/ =~ text
+        score[:numbers] = 1
       else
-        score[:d] = 0
-      end
-
-      if /\$/ =~ text
-        score[:e] = 1
-      else
-        score[:e] = 0
+        score[:numbers] = 0
       end
 
       if /\?/ =~ text
-        score[:f] = 1
+        score[:question] = 1
       else
-        score[:f] = 0
+        score[:question] = 0
       end
 
       if text.length > average_length(messages)
-        score[:g] = 1
+        score[:length] = 1
       else
-        score[:g] = 0
+        score[:length] = 0
       end
 
       split = text.split(' ')
       if split.size > average_num_words(messages)
-        score[:h] = 1
+        score[:word_count] = 1
       else
-        score[:h] = 0
+        score[:word_count] = 0
       end
 
-      final_score = 0.15*score[:a] + 0.05*score[:b] + 0.05*score[:c] + 0.2*score[:d] + 0.2*score[:e] + 0.15*score[:f] + 0.1*score[:g] + 0.1*score[:h]
+      final_score = 0.15*score[:file] + 0.05*score[:capital] 
+        + 0.05*score[:keywords] + 0.3*score[:numbers] + 0.1*score[:question] 
+        + 0.15*score[:length] + 0.2*score[:word_count]
 
         m["score"] = final_score
     end
@@ -130,4 +125,6 @@ messages = messages.sort {|s| s["ts"].to_f}
 a = MessageRater.new
 top = a.top_fourth(messages)
 top = a.set_score(messages)
-puts top[1]["text"]
+top.each do |x|
+  puts x["text"]
+end

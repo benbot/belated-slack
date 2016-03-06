@@ -1,9 +1,8 @@
-# require "sinatra"
+require "sinatra"
+require "json"
 # require "sinatra/reloader"
 
-require "./messages"
 
-
-post "/angeloisgay" do
-
+get "/angeloisgay" do
+  {"text":"Hello"}.to_json
 end
