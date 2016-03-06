@@ -1,1 +1,1 @@
-web: ruby -p $IP app.rb
+web: ruby app.rb -p $PORT

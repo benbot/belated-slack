@@ -7,5 +7,3 @@ gem "sinatra-contrib"
 gem "byebug"
 
 gem "httparty"
-
-gem "puma"
