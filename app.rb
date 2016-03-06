@@ -1,6 +1,7 @@
 require "sinatra"
 require "json"
 require "./message_rater"
+require "redis"
 # require "sinatra/reloader"
 
 get "/" do
@@ -9,13 +10,13 @@ end
 
 get "/belate" do
   # messages = [{time: "5"}, {time: "3"}, {time: "3"}, {time: "3"}]
-  resp = HTTParty.get("https://slack.com/api/channels.list?token=xoxp-23405578101-24698746982-24712729345-75f715a977")
+  resp = HTTParty.get("https://slack.com/api/channels.list?token=xoxp-3163547988-6152538678-24712139637-7ec7e33a52")
   body = JSON.parse resp.body
   channel = body["channels"]
   general = channel.select {|c| c["name"] == "general"}
   id = general.first["id"]
 
-  resp = HTTParty.get("https://slack.com/api/channels.history?token=xoxp-23405578101-24698746982-24712729345-75f715a977&channel=#{id}")
+  resp = HTTParty.get("https://slack.com/api/channels.history?token=xoxp-3163547988-6152538678-24712139637-7ec7e33a52&channel=#{id}")
   resp = JSON.parse resp.body
 
   messages = resp["messages"]
@@ -32,4 +33,8 @@ get "/belate" do
 
   # {"text": s}.to_json
   s
+end
+
+get "/auth/:provider/callback" do
+
 end
