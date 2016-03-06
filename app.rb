@@ -9,13 +9,13 @@ end
 
 get "/belate" do
   # messages = [{time: "5"}, {time: "3"}, {time: "3"}, {time: "3"}]
-  resp = HTTParty.get("https://slack.com/api/channels.list?token=xoxp-3163547988-6152538678-24669835091-ea7d0b9870")
+  resp = HTTParty.get("https://slack.com/api/channels.list?token=xoxp-23405578101-24698746982-24712729345-75f715a977")
   body = JSON.parse resp.body
   channel = body["channels"]
   general = channel.select {|c| c["name"] == "general"}
   id = general.first["id"]
 
-  resp = HTTParty.get("https://slack.com/api/channels.history?token=xoxp-3163547988-6152538678-24669835091-ea7d0b9870&channel=#{id}")
+  resp = HTTParty.get("https://slack.com/api/channels.history?token=xoxp-23405578101-24698746982-24712729345-75f715a977&channel=#{id}")
   resp = JSON.parse resp.body
 
   messages = resp["messages"]
