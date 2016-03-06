@@ -9,7 +9,6 @@ GEM
     json (1.8.3)
     multi_json (1.11.2)
     multi_xml (0.5.5)
-    puma (3.0.2)
     rack (1.6.4)
     rack-protection (1.5.3)
       rack
@@ -34,7 +33,6 @@ PLATFORMS
 DEPENDENCIES
   byebug
   httparty
-  puma
   sinatra
   sinatra-contrib
 
