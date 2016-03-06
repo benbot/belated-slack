@@ -1,12 +1,11 @@
 require "sinatra"
 require "json"
-require 'omniauth'
-require 'omniauth-slack'
 require "./message_rater"
 # require "sinatra/reloader"
 
-enable :sessions
-use OmniAuth::Strategies::Slack
+get "/" do
+  "NOPE"
+end
 
 get "/belate" do
   # messages = [{time: "5"}, {time: "3"}, {time: "3"}, {time: "3"}]
@@ -32,5 +31,4 @@ get "/belate" do
   s += "Important Messages!\n 1. #{top[0]["text"]}\n2. #{top[0]["text"]}\n3. #{top[0]["text"]}\n"
 
   {"text": s}.to_json
-
 end
