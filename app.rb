@@ -29,7 +29,7 @@ get "/belate" do
 
   s = ""
 
-  s += "Important Messages!\n 1. #{top[0]["text"]}\n2. #{top[1]["text"]}\n3. #{top[2]["text"]}\n"
+  s += "Important Messages!\n 1. #{top[0]["text"]}\n2. #{top[1]["text"]}\n3. #{top[2]["text"]}\n4. #{top[3]["text"]}\n5. #{top[4]["text"]}\n"
 
   # {"text": s}.to_json
   s
